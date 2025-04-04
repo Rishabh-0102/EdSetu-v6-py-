@@ -14,7 +14,7 @@ def extract_transcript(video_id):
         
         try:
             # Try getting English transcript first
-            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['hi','en'])
         except NoTranscriptFound:
             # Get list of available transcripts
             available_transcripts = YouTubeTranscriptApi.list_transcripts(video_id)

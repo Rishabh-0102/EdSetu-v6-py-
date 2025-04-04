@@ -3,7 +3,7 @@ from utils import extract_transcript, generate_summary, generate_quiz
 import requests
 
 # YouTube API Key
-YOUTUBE_API_KEY = "AIzaSyBWjRlxFatTtEC_mVcnOKUXRmTy81dWOF0"
+YOUTUBE_API_KEY = "AIzaSyDKwheB2EpmoTmF_EvXpitoNb3sGZb1_kI"
 
 def search_youtube(query):
     """Search for YouTube videos based on a query."""
