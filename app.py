@@ -13,7 +13,8 @@ def search_youtube(query):
     return response.get("items", [])
 
 # Streamlit UI
-st.title("🎥 YouTube Video Summarizer & Quiz Generator")
+st.title("EdSetu v5.0")
+st.write("🎥 YouTube Video Summarizer & Quiz Generator")
 
 # ✅ Streamlit UI
 st.sidebar.title("🔐 Login / Signup")
