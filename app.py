@@ -32,8 +32,9 @@ if query:
             # Clicking the button stores video ID & navigates to video page
             if st.button(f"▶ Watch {title}", key=video_id):
                 st.session_state["selected_video"] = video_id
-                st.rerun()  # ✅ FIXED: Deprecated `st.experimental_rerun()`
+                st.switch_page("pages/video_page.py")
+                # st.rerun()  # ✅ FIXED: Deprecated `st.experimental_rerun()`
 
 # Redirect to video page when a video is selected
-if "selected_video" in st.session_state:
-    st.switch_page("video_page")  # ✅ FIXED: Better navigation
+# if "selected_video" in st.session_state:
+    # st.switch_page("video_page")  # ✅ FIXED: Better navigation

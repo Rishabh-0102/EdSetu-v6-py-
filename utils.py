@@ -44,7 +44,7 @@ def extract_transcript(video_id):
             return f"Error: Unexpected response format from YouTubeTranscriptApi. Response: {transcript_list}"
 
     except TranscriptsDisabled:
-        return "Error: Transcripts are disabled for this video."
+        return "Transcripts are disabled for this video."
     except Exception as e:
         return f"Error fetching transcript: {str(e)}"
 
