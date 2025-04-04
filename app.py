@@ -1,7 +1,7 @@
 import streamlit as st
-from firebase_config import auth  # ✅ Import Firebase auth
 from utils import extract_transcript, generate_summary, generate_quiz
 import requests
+from firebase_config import auth  # ✅ Import Firebase auth
 
 # YouTube API Key
 YOUTUBE_API_KEY = "AIzaSyDKwheB2EpmoTmF_EvXpitoNb3sGZb1_kI"

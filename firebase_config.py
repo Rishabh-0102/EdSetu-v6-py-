@@ -1,4 +1,7 @@
-import pyrebase
+try:
+    import pyrebase4 as pyrebase
+except ModuleNotFoundError:
+    import pyrebase  # ✅ Works on Local
 import json
 
 # ✅ Replace with your Firebase project credentials
