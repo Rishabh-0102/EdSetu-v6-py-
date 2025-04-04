@@ -8,7 +8,7 @@ YOUTUBE_API_KEY = "AIzaSyDKwheB2EpmoTmF_EvXpitoNb3sGZb1_kI"
 
 def search_youtube(query):
     """Search for YouTube videos based on a query."""
-    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={query}&type=video&key={YOUTUBE_API_KEY}&maxResults=5"
+    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&q={query}&type=video&key={YOUTUBE_API_KEY}&maxResults=15"
     response = requests.get(url).json()
     return response.get("items", [])
 

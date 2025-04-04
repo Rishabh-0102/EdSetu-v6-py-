@@ -101,7 +101,7 @@ with col2:
         st.success(f"🎯 Your Final Score: {score} / {len(st.session_state.quiz_data)}")
 
 with col3:
-    if st.button("Fetch PDF"):
+    if st.button("Fetch Notes"):
         with st.spinner("Fetching transcript..."):
             transcript = extract_transcript(video_id)
 
