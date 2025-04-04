@@ -8,12 +8,10 @@ load_dotenv()
 
 genai.configure(api_key=os.getenv("AIzaSyAhPb-x252CQduuzsOEjX6kz3YXEN2tHJI"))
 
-def extract_transcript(video_url):
+def extract_transcript(video_id):
     """Fetch transcript from a YouTube video, prioritizing English but allowing other languages."""
     try:
-        # Extract video ID from URL
-        video_id = video_url.split("v=")[-1].split("&")[0]
-
+        
         try:
             # Try getting English transcript first
             transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
@@ -31,13 +29,20 @@ def extract_transcript(video_url):
             if transcript is None:
                 return "Error: No available transcript found for this video."
 
-            # Fetch transcript text
+            # Fetch transcript text correctly
             transcript_list = transcript.fetch()
 
-        # Combine transcript text properly
-        transcript_text = " ".join([t.text for t in transcript_list])  # FIX: Use `.text`
+        # ✅ DEBUG: Print transcript_list to see what it contains
+        print("DEBUG: Transcript List Type ->", type(transcript_list))
+        print("DEBUG: First Item ->", transcript_list[0] if isinstance(transcript_list, list) else transcript_list)
 
-        return transcript_text
+        # ✅ FIX: Ensure transcript_list is a list of dicts before accessing "text"
+        if isinstance(transcript_list, list) and all(isinstance(item, dict) for item in transcript_list):
+            transcript_text = " ".join([item["text"] for item in transcript_list])
+            return transcript_text
+        else:
+            return f"Error: Unexpected response format from YouTubeTranscriptApi. Response: {transcript_list}"
+
     except TranscriptsDisabled:
         return "Error: Transcripts are disabled for this video."
     except Exception as e:
@@ -50,27 +55,26 @@ def generate_summary(transcript_text):
         model = "models/gemini-1.5-flash"  # or "models/gemini-1.5-flash-latest"
         
         prompt = (
-            "I am a learner want to learn from youtube vide. I watched the video but i want the summery for futher use please help me in learning.I'm taking you as a YouTube video summarizer.You will be taking transcript text and summarizing the entire video and provide the important points"
-            "Summarize the following transcript in bullet points (you can make as many points you want to create):\n\n"
-            f"{transcript_text}"
+            "I watched a YouTube video, and I need a summary for learning. Please summarize the key points in bullet format."
+            f"\n\nTranscript:\n{transcript_text}"
         )
         
         response = genai.GenerativeModel(model).generate_content(prompt)
         return response.text
     except Exception as e:
         return f"Error generating summary: {str(e)}"
+
 def generate_quiz(transcript_text):
-    """Generate a summary using Google Generative AI."""
+    """Generate a quiz using Google Generative AI."""
     try:
         model = "models/gemini-1.5-flash"  # or "models/gemini-1.5-flash-latest"
         
         prompt = (
-            "I am a learner want to learn from youtube vide. I watched the video but i want to go through my concepts so i want you to generate quiz or multiple-choice questions for checking if i properly learned these or not please help me in learning.I'm taking you as my teacher who can give me a multiple-choice questions.You will be taking transcript text and making the quize from it."
-            "Make the quiz of the following transcript(you can make as many multiple-choice questions you want but insure that the all topics are covered):\n\n"
-            f"{transcript_text}"
+            "Generate multiple-choice questions (MCQs) from the given YouTube video transcript to test my understanding."
+            f"\n\nTranscript:\n{transcript_text}"
         )
         
         response = genai.GenerativeModel(model).generate_content(prompt)
         return response.text
     except Exception as e:
-        return f"Error generating summary: {str(e)}"
+        return f"Error generating quiz: {str(e)}"
