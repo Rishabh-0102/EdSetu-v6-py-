@@ -4,7 +4,7 @@ import requests
 from firebase_config import auth  # ✅ Import Firebase auth
 
 # YouTube API Key
-YOUTUBE_API_KEY = "AIzaSyDKwheB2EpmoTmF_EvXpitoNb3sGZb1_kI"
+YOUTUBE_API_KEY = st.secrets["youtube_api"]["api_key"]
 
 def search_youtube(query):
     """Search for YouTube videos based on a query."""
